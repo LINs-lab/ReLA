@@ -63,6 +63,13 @@ Above all, we propose a Representation Learning Accelerator (ReLA), which levera
 
 <p align="center">Framework of ReLA Application: (1) ReLA-D converts unlabeled data into a (near-)ideal dataset, selecting a dynamic subset as distilled data; (2) ReLA-F serves as an auxiliary accelerator, enhancing existing (self-)supervised learning algorithms by leveraging the dynamic distilled dataset. This process results in a well-trained model and yields more ideal data as an auxiliary gift.</p>
 
+
+## Tasks
+
+- [ ] Develop a demonstration for ReLA.
+- [ ] Integrate the complete ReLA codebase.
+- [ ] Continuously refine and enhance the [manuscript](https://arxiv.org/abs/2405.14669).
+
 ## Bibliography
 
 If you find this repository helpful for your project, please consider citing our work:
