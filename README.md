@@ -10,65 +10,59 @@ class="center">
 </div>
 
 
-## Why need ReLA (a data converter)?
-Data, the cornerstone of modern deep learning, is proliferating rapidly in contemporary society, presenting two fundamental challenges:
-
-- Leveraging unlabeled data directly poses significant challenges in terms of efficiency and effectiveness, even when employing advanced self-supervised learning techniques.
-- Human annotation is an effective method for processing unlabeled data. However, annotating large-scale unlabeled datasets is resource-intensive and time-consuming, requiring considerable labor, and often results in suboptimal data in terms of both efficiency and effectiveness.
-
-Now, our ReLA offers an efficient and autonomous solution to convert unlabeled or human-labeled data into ideal data, thereby maximizing data utility:
-<p align="center">
-<img src="./assets/results.jpg" width=100% height=100% 
-class="center">
-</p>
-
-
-Key message: **Converting data into labeled data by humans is indeed a resource-intensive process that presents several challenges for effective and efficient training. Moreover, the manual labeling of vast amounts of data from the internet is particularly infeasible.** Below, we highlight the cheap conversion cost of our ReLA and how it addresses these challenges.
-
-## Why choose ReLA?
-The objective of ReLA also aligns with data distillation tasks, specifically enabling efficient and effective model training with reduced steps/data. Here, we present a comparison between ReLA and traditional data distillation techniques:
-
-| Paradigm     | Conversion/Distillation Cost      | Supports (Un)labeled Data | Reduces Total Computational Cost |
-| ------------ | --------------------------------- | ------------------------- | -------------------------------- |
-| ReLA         | Much less than 1% training cost   | :white_check_mark:        | :white_check_mark:               |
-| Conventional | Much more than 100% training cost | :x:                       | :x:                              |
-
-Key message: Conventional data distillation methods primarily target labeled data, incurring a distillation cost that exceeds the training cost on the entire dataset. Consequently, these methods do not reduce total cost. In contrast, ReLA enables efficient conversion for both labeled and unlabeled data. **For instance, using a single RTX-4090, ReLA can convert the unlabeled ImageNet-1K dataset to an ideal one in 15 minutes. Training on 50% of this ideal data (as distilled data) can achieve equivalent performance to training on the full dataset, thereby reducing total computational cost by more than 20 hours.**
-
-
 ## Abstract
+Data, the seminal opportunity and challenge in modern machine learning, currently constrains the scalability of representation learning and impedes the pace of model evolution.
+In this work, we investigate the efficiency properties of data from both optimization and generalization perspectives.
+Our theoretical and empirical analysis reveals an unexpected finding: for a given task, utilizing a publicly available, task- and architecture-agnostic model (referred to as the `prior model' in this paper) can effectively produce efficient data.
+Building on this insight, we propose the Representation Learning Accelerator (ReLA), which promotes the formation and utilization of efficient data, thereby accelerating representation learning.
+Utilizing a ResNet-18 pre-trained on CIFAR-10 as a prior model to inform ResNet-50 training on ImageNet-1K reduces computational costs by $50\%$ while maintaining the same accuracy as the model trained with the original BYOL, which requires $100\%$ cost.
 
-This is an official PyTorch implementation of the paper **Efficiency for Free: Ideal Data Are Transportable Representations (Preprint 2024)**. In this work, we investigate:
-### What do neural network models learn?
-Inspired by Alan Turing's seminal work [1], which discusses "a possible mechanism by which the genes of a zygote may determine the anatomical structure of the resulting organism", we draw a parallel to modern deep learning models. Turing's concept revolves around the progressive generation of the complex biological world from simple "seeds". Similarly, we propose that contemporary deep generative models encapsulate the progression from simple "seeds" to intricate samples. Conversely, representation models are engaged in the inverse operation, deconstructing complex samples into their fundamental components:
-<p align="center">
-<img src="./assets/ai_nature.jpg" width="100%" height="100%" class="center">
-</p>
-Building upon the above discussion, we posit that AI models inherently attempt to capture the underlying mechanisms of natural world evolution. Thus, we posit that model-generated representations, despite being well-trained on diverse tasks and architectures, converge to a "black hole" (shared linear space), facilitating effective transport between models:
-<p align="center">
-<img src="./assets/linear_rep.jpg" width="100%" height="100%" class="center">
-</p>
+## Usage
 
-### Ideal data are what models aim to learn.
-Moreover, we:
+### Requirements
 
-- Delve into defining the ideal data properties from both optimization and generalization perspectives.
-- Theoretically and empirically demonstrate that these transportable representations exhibit properties conducive to the formation of ideal data.
+```
+torchvision
+torch
+lightly
+pytorch-lightning
+```
 
-Above all, we propose a Representation Learning Accelerator (ReLA), which leverages a task- and architecture-agnostic, yet publicly available, free model to form (near-)ideal data and thus accelerate representation learning:
+### How to Run
 
-<p align="center">
-<img src="./assets/framework.jpg" width="100%" height="100%" class="center">
-</p>
+The primary entry point for a single experiment is [`main.py`](main.py). To simplify the execution of multiple experiments, we provide a set of [`scripts`](scripts/) designed for running the bulk experiments detailed in the paper. For instance, to execute `ReLA` for accelerating the training of ResNet-18 with BYOL on the CIFAR-10 dataset, you can use the following command:
 
-<p align="center">Framework of ReLA Application: (1) ReLA-D converts unlabeled data into a (near-)ideal dataset, selecting a dynamic subset as distilled data; (2) ReLA-F serves as an auxiliary accelerator, enhancing existing (self-)supervised learning algorithms by leveraging the dynamic distilled dataset. This process results in a well-trained model and yields more ideal data as an auxiliary gift.</p>
+```shell
+bash ./scripts/run.sh
+```
 
+### Storage Format for Raw Datasets
 
-## Tasks
+All our raw datasets, including those like ImageNet-1K and CIFAR10, store their training and validation components in the following format to facilitate uniform reading using a standard dataset class method:
 
-- [ ] Develop a demonstration for ReLA.
-- [ ] Integrate the complete ReLA codebase.
-- [ ] Continuously refine and enhance the [manuscript](https://arxiv.org/abs/2405.14669).
+```
+/path/to/dataset/
+├── 00000/
+│   ├── image1.jpg
+│   ├── image2.jpg
+│   ├── image3.jpg
+│   ├── image4.jpg
+│   └── image5.jpg
+├── 00001/
+│   ├── image1.jpg
+│   ├── image2.jpg
+│   ├── image3.jpg
+│   ├── image4.jpg
+│   └── image5.jpg
+├── 00002/
+│   ├── image1.jpg
+│   ├── image2.jpg
+│   ├── image3.jpg
+│   ├── image4.jpg
+│   └── image5.jpg
+```
+
+This organizational structure ensures compatibility with the unified dataset class, streamlining the process of data handling and accessibility.
 
 ## Bibliography
 
@@ -85,4 +79,4 @@ If you find this repository helpful for your project, please consider citing our
 
 ## Reference
 
-[1] Turing, A.M., 1952. The chemical basis of morphogenesis. Bulletin of mathematical biology, 52, pp.153-197.
+Our code has referred to previous work: [LightlySSL](https://github.com/lightly-ai/lightly)

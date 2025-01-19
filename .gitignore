@@ -147,3 +147,7 @@ dmypy.json
 
 # others
 code
+priors
+create_env.sh
+outputs
+redata
