@@ -69,11 +69,13 @@ This organizational structure ensures compatibility with the unified dataset cla
 If you find this repository helpful for your project, please consider citing our work:
 
 ```
-@article{sun2024efficiency,
-  title={Efficiency for Free: Ideal Data Are Transportable Representations},
-  author={Sun, Peng and Jiang, Yi and Lin, Tao},
-  journal={arXiv preprint arXiv:2405.14669},
-  year={2024}
+@inproceedings{
+sun2024efficiency,
+title={Efficiency for Free: Ideal Data Are Transportable Representations},
+author={Peng Sun and Yi Jiang and Tao Lin},
+booktitle={The Thirty-eighth Annual Conference on Neural Information Processing Systems},
+year={2024},
+url={https://openreview.net/forum?id=UPxmISfNCO}
 }
 ```
 
