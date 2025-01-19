@@ -15,7 +15,7 @@ Data, the seminal opportunity and challenge in modern machine learning, currentl
 In this work, we investigate the efficiency properties of data from both optimization and generalization perspectives.
 Our theoretical and empirical analysis reveals an unexpected finding: for a given task, utilizing a publicly available, task- and architecture-agnostic model (referred to as the `prior model' in this paper) can effectively produce efficient data.
 Building on this insight, we propose the Representation Learning Accelerator (ReLA), which promotes the formation and utilization of efficient data, thereby accelerating representation learning.
-Utilizing a ResNet-18 pre-trained on CIFAR-10 as a prior model to inform ResNet-50 training on ImageNet-1K reduces computational costs by $50\%$ while maintaining the same accuracy as the model trained with the original BYOL, which requires $100\%$ cost.
+Utilizing a ResNet-18 pre-trained on CIFAR-10 as a prior model to inform ResNet-50 training on ImageNet-1K reduces computational costs by $50$% while maintaining the same accuracy as the model trained with the original BYOL, which requires $100$% cost.
 
 ## Usage
 
